@@ -52,6 +52,20 @@ router.param("idSurfero", (req, res, next, id) => {
 });
   
 
+
+/**
+ * Devuelve todas las personas que hay en la BBDD
+ */
+router.get("/getTodas", async (req, res) => {
+    try {
+        await callbacks.getTodas(req, res)
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+
 /**
  * Devuelve los datos de la persona con el id pasado
  */
