@@ -184,3 +184,11 @@ Tus tareas consisten en:
   puntuacion: 59300,
   numVictorias: 3
 }
+
+## HISTORIA DE USUARIO 1
+Ver la información del autor/autora de la aplicación al pulsar en el botón “Acerca de” 
+
+<img src='/hu1.png' width='200px'>
+
+
+<img src='/trello-hu1.png' width='200px'>
