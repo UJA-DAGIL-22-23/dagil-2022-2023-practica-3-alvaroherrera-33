@@ -56,13 +56,29 @@ describe('Servidor PLANTILLA:', () => {
         .expect('Content-Type', /json/)
         .expect(function (res) {
           //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
-          assert(res.body.data[0].data.hasOwnProperty('¿¿¿ PROPIEDAD ???'));
-          assert(res.body.data[0].data.nombre === "¿¿¿ VALOR ESPERADO ???");
+          assert(res.body.data[0].data.hasOwnProperty('nombre'));
+          assert(res.body.data[0].data.nombre === "Gabriel");
+          assert(res.body.data[2].data.hasOwnProperty('apellidos'));
+          assert(res.body.data[2].data.apellidos === "Gilmore");
 
         })
         .end((error) => { error ? done.fail(error) : done(); }
         );
     });
+
+   /*it('Devuelve carlos@hotmail.com al recuperar los datos de la Persona con id 354047338258366678 mediante getPorId', (done) => {
+      supertest(app)
+        .get('/getPorId/354047338258366678')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function (res) {
+          //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
+          assert(res.body.data.hasOwnProperty('email'));
+          assert(res.body.data.email === "ana.alvarez@gmail.com");
+        })
+        .end((error) => { error ? done.fail(error) : done(); }
+        );
+    });*/
 
   })
 });

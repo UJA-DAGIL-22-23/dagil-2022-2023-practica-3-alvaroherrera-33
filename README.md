@@ -12,7 +12,7 @@ Tus tareas consisten en:
 
 * **GitHub**: https://github.com/alvaroherrera-33
 
-* **Trello**: hhttps://trello.com/b/2iAbazNM/pr%C3%A1ctica-3
+* **Trello**: https://trello.com/b/2iAbazNM/pr%C3%A1ctica-3
 
 * **Fauna**: 
 <img src='/fauna-portada.png' width='200px'>
@@ -64,6 +64,7 @@ Tus tareas consisten en:
   puntuacion: 54400,
   numVictorias: 4
 }
+
 {
   nombre: "Stephanie",
   apellidos: "Gilmore",
@@ -79,6 +80,7 @@ Tus tareas consisten en:
   puntuacion: 64200,
   numVictorias: 14
 }
+
 {
   nombre: "Carissa",
   apellidos: "Moore",
@@ -94,6 +96,7 @@ Tus tareas consisten en:
   puntuacion: 59500,
   numVictorias: 5
 }
+
 {
   nombre: "John John",
   apellidos: "Florence",
@@ -109,6 +112,7 @@ Tus tareas consisten en:
   puntuacion: 53500,
   numVictorias: 8
 }
+
 {
   nombre: "Andy",
   apellidos: "Irons",
@@ -124,6 +128,7 @@ Tus tareas consisten en:
   puntuacion: 6800,
   numVictorias: 6
 }
+
 {
   nombre: "Chelsea",
   apellidos: "Georgeson",
@@ -139,6 +144,7 @@ Tus tareas consisten en:
   puntuacion: 53800,
   numVictorias: 9
 }
+
 {
   nombre: "Lina",
   apellidos: "Andersen",
@@ -154,6 +160,7 @@ Tus tareas consisten en:
   puntuacion: 4800,
   numVictorias: 6
 }
+
 {
   nombre: "Clifton James",
   apellidos: "Hobgood",
@@ -169,6 +176,7 @@ Tus tareas consisten en:
   puntuacion: 4800,
   numVictorias: 4
 }
+
 {
   nombre: "Italo",
   apellidos: "Ferreira",

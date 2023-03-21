@@ -92,6 +92,36 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
     Frontend.Article.actualizar("Plantilla Acerca de", mensajeAMostrar)
 }
 
+/**
+ * Función principal para mostrar los datos enviados por la ruta "acerca de" de MS Plantilla
+ */
+Plantilla.listadoDeNombres = function (datosDescargados) {
+    // Si no se ha proporcionado valor para datosDescargados
+    datosDescargados = datosDescargados || this.datosDescargadosNulos
+
+    // Si datos descargados NO es un objeto 
+    if (typeof datosDescargados !== "object") datosDescargados = this.datosDescargadosNulos
+
+    // Si datos descargados NO contiene los campos mensaje, autor, o email
+    if (typeof datosDescargados.nombre === "undefined" ||
+        typeof datosDescargados.apellidos === "undefined" ||
+        typeof datosDescargados.email === "undefined" ||
+        typeof datosDescargados.fecha === "undefined"
+    ) datosDescargados = this.datosDescargadosNulos
+
+    const mensajeAMostrar = `<div>
+    <p>${datosDescargados.mensaje}</p>
+    <ul>
+        <li><b>Autor/a</b>: ${datosDescargados.autor}</li>
+        <li><b>E-mail</b>: ${datosDescargados.email}</li>
+        <li><b>Fecha</b>: ${datosDescargados.fecha}</li>
+    </ul>
+    </div>
+    `;
+    Frontend.Article.actualizar("Plantilla Acerca de", mensajeAMostrar)
+}
+
+
 
 /**
  * Función principal para responder al evento de elegir la opción "Home"
