@@ -79,7 +79,7 @@ const CB_MODEL_SELECTS = {
             // console.log( personas ) // Para comprobar qué se ha devuelto en personas
             CORS(res)
                 .status(200)
-                .json(personas)
+                .json(surfero)
         } catch (error) {
             CORS(res).status(500).json({ error: error.description })
         }
