@@ -47,7 +47,7 @@ Surferos.plantillaTablaPersonas.cuerpo = `
         <td>${Surferos.plantillaTags["NUM VICTORIAS"]}</td>
 
         <td>
-                    <div><a href="javascript:Personas.mostrar('${Personas.plantillaTags.ID}')" class="opcion-secundaria mostrar">Mostrar</a></div>
+                    <div><a href="javascript:Personas.mostrar('${Surferos.plantillaTags.ID}')" class="opcion-secundaria mostrar">Mostrar</a></div>
         </td>
     </tr>
     `;
@@ -97,7 +97,7 @@ Surferos.imprimeMuchasPersonas = function (vector) {
 
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Surferos.plantillaTablaPersonas.cabecera
-    vector.forEach(e => msj += Personas.plantillaTablaPersonas.actualiza(e))
+    vector.forEach(e => msj += Surferos.plantillaTablaPersonas.actualiza(e))
     msj += Surferos.plantillaTablaPersonas.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
@@ -136,4 +136,11 @@ Surferos.recupera = async function (callBackFn) {
  */
 Surferos.listar = function () {
     Surferos.recupera(Surferos.imprimeMuchasPersonas);
+}
+
+/**
+ * Función principal para responder al evento de elegir la opción "Acerca de"
+ */
+Surferos.procesarListaNombres = function () {
+    this.descargarRuta("/surferos/getTodas", this.imprimeMuchasPersonas);
 }
