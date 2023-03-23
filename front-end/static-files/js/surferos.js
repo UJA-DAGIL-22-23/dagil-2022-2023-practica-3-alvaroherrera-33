@@ -70,7 +70,7 @@ Surferos.sustituyeTags = function (plantilla, surfero) {
         .replace(new RegExp(Surferos.plantillaTags.ID, 'g'), surfero.ref['@ref'].id)
         .replace(new RegExp(Surferos.plantillaTags.NOMBRE, 'g'), surfero.data.nombre)
         .replace(new RegExp(Surferos.plantillaTags.APELLIDOS, 'g'), surfero.data.apellidos)
-        .replace(new RegExp(Surferos.plantillaTags["LUGAR NACIMIENTO"], 'g'), surfero.data.lugar_nacimiento)
+        .replace(new RegExp(Surferos.plantillaTags["LUGAR NACIMIENTO"], 'g'), surfero.data.lugarNacimiento.ciudad)
         .replace(new RegExp(Surferos.plantillaTags["NUM CAMPEONATOS DISPUTADOS"], 'g'), surfero.data.num_campeonatos_disputados)
         .replace(new RegExp(Surferos.plantillaTags["AÑOS COMPITIENDO"], 'g'), surfero.data.años_compitiendo)
         .replace(new RegExp(Surferos.plantillaTags.PUNTUACION, 'g'), surfero.data.puntuacion)
