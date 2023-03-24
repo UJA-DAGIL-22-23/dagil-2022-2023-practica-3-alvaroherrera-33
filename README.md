@@ -15,11 +15,11 @@ Tus tareas consisten en:
 * **Trello**: https://trello.com/b/2iAbazNM/pr%C3%A1ctica-3
 
 * **Fauna**: 
-<img src='img/fauna-portada.png' width='400px'>
+<img src='img/fauna-portada.png' width='1400px'>
 
-<img src='img/fauna-surf.png' width='400px'>
+<img src='img/fauna-surf.png' width='1400px'>
 
-<img src='img/fauna-datos.png' width='400px'>
+<img src='img/fauna-datos.png' width='1400px'>
 
 {
   nombre: "Gabriel",
@@ -196,15 +196,15 @@ Tus tareas consisten en:
 ## HISTORIA DE USUARIO 1
 Ver la información del autor/autora de la aplicación al pulsar en el botón “Acerca de” 
 
-<img src='img/hu1.png' width='400px'>
+<img src='img/hu1.png' width='1400px'>
 
 
-<img src='img/trello-hu1.png' width='400px'>
+<img src='img/trello-hu1.png' width='1400px'>
 
 ## HISTORIA DE USUARIO 2
 Ver la información de todos los surferos al pulsar en el botón “Listado de datos completo” 
 
-<img src='img/hu2.png' width='400px'>
+<img src='img/hu2.png' width='1400px'>
 
 
-<img src='img/trello-hu2.png' width='400px'>
+<img src='img/trello-hu2.png' width='1400px'>
