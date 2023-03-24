@@ -200,3 +200,11 @@ Ver la información del autor/autora de la aplicación al pulsar en el botón �
 
 
 <img src='/trello-hu1.png' width='200px'>
+
+## HISTORIA DE USUARIO 2
+Ver la información de todos los surferos al pulsar en el botón “Listado de datos completo” 
+
+<img src='/hu2.png' width='200px'>
+
+
+<img src='/trello-hu2.png' width='200px'>

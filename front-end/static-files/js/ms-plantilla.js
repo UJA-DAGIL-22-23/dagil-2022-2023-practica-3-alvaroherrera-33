@@ -127,14 +127,14 @@ Plantilla.listadoDeNombres = function (datosDescargados) {
  * Función principal para responder al evento de elegir la opción "Home"
  */
 Plantilla.procesarHome = function () {
-    this.descargarRuta("/plantilla/", this.mostrarHome);
+    this.descargarRuta("/surferos/", this.mostrarHome);
 }
 
 /**
  * Función principal para responder al evento de elegir la opción "Acerca de"
  */
 Plantilla.procesarAcercaDe = function () {
-    this.descargarRuta("/plantilla/acercade", this.mostrarAcercaDe);
+    this.descargarRuta("/surferos/acercade", this.mostrarAcercaDe);
 }
 
 

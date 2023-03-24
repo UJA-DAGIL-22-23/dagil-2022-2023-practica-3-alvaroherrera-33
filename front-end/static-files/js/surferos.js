@@ -8,8 +8,10 @@ Surferos.plantillaTags = {
     "ID": "### ID ###",
     "NOMBRE": "### NOMBRE ###",
     "APELLIDOS": "### APELLIDOS ###",
-    "LUGAR NACIMIENTO": "### LUGAR NACIMIENTO ###",
-    "NUM CAMPEONATOS DISPUTADOS": "### NUM CAMPEONATOS DISPUTADOS ###",
+    "CIUDAD": "### CIUDAD ###",
+    "PAIS": "### PAIS ###",
+    "NUM": "### NUM ###",
+    "EVENTO": "### EVENTO ###",
     "AÑOS COMPITIENDO": "### AÑOS COMPITIENDO ###",
     "PUNTUACION": "### PUNTUACION ###",
     "NUM VICTORIAS": "### NUM VICTORIAS ###",
@@ -20,16 +22,22 @@ Surferos.plantillaTablaPersonas = {}
 
 
 // Cabecera de la tabla
-Surferos.plantillaTablaPersonas.cabecera = `<table width="100%" class="listado-personas">
+Surferos.plantillaTablaPersonas.cabecera = `
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+                    <table width="100%" class="listado-personas">
                     <thead>
-                        <th width="10%">Id</th>
-                        <th width="20%">Nombre</th>
-                        <th width="20%">Apellidos</th>
-                        <th width="10%">Lugar nacimiento</th>
+                        <th width="15%">Id</th>
+                        <th width="10%">Nombre</th>
+                        <th width="10%">Apellidos</th>
+                        <th width="15%">Lugar nacimiento</th>
                         <th width="15%">Numero de campeonatos disputados</th>
-                        <th width="15%">Años compitiendo</th>
-                        <th width="15%">Puntuación</th>
-                        <th width="15%">Numero de victorias</th>
+                        <th width="20%">Años compitiendo</th>
+                        <th width="10%">Puntuación máxima</th>
+                        <th width="10%">Numero de victorias</th>
                     </thead>
                     <tbody>
     `;
@@ -40,15 +48,11 @@ Surferos.plantillaTablaPersonas.cuerpo = `
         <td>${Surferos.plantillaTags.ID}</td>
         <td>${Surferos.plantillaTags.NOMBRE}</td>
         <td>${Surferos.plantillaTags.APELLIDOS}</td>
-        <td>${Surferos.plantillaTags["LUGAR NACIMIENTO"]}</td>
-        <td>${Surferos.plantillaTags["NUM CAMPEONATOS DISPUTADOS"]}</td>
+        <td>${Surferos.plantillaTags.CIUDAD}, ${Surferos.plantillaTags.PAIS}</td>
+        <td>${Surferos.plantillaTags.NUM}  (${Surferos.plantillaTags.EVENTO})</td>
         <td>${Surferos.plantillaTags["AÑOS COMPITIENDO"]}</td>
         <td>${Surferos.plantillaTags.PUNTUACION}</td>
         <td>${Surferos.plantillaTags["NUM VICTORIAS"]}</td>
-
-        <td>
-                    <div><a href="javascript:Personas.mostrar('${Surferos.plantillaTags.ID}')" class="opcion-secundaria mostrar">Mostrar</a></div>
-        </td>
     </tr>
     `;
 
@@ -70,11 +74,13 @@ Surferos.sustituyeTags = function (plantilla, surfero) {
         .replace(new RegExp(Surferos.plantillaTags.ID, 'g'), surfero.ref['@ref'].id)
         .replace(new RegExp(Surferos.plantillaTags.NOMBRE, 'g'), surfero.data.nombre)
         .replace(new RegExp(Surferos.plantillaTags.APELLIDOS, 'g'), surfero.data.apellidos)
-        .replace(new RegExp(Surferos.plantillaTags["LUGAR NACIMIENTO"], 'g'), surfero.data.lugarNacimiento.ciudad)
-        .replace(new RegExp(Surferos.plantillaTags["NUM CAMPEONATOS DISPUTADOS"], 'g'), surfero.data.num_campeonatos_disputados)
-        .replace(new RegExp(Surferos.plantillaTags["AÑOS COMPITIENDO"], 'g'), surfero.data.años_compitiendo)
+        .replace(new RegExp(Surferos.plantillaTags["CIUDAD"], 'g'), surfero.data.lugarNacimiento.ciudad)
+        .replace(new RegExp(Surferos.plantillaTags["PAIS"], 'g'), surfero.data.lugarNacimiento.pais)
+        .replace(new RegExp(Surferos.plantillaTags.NUM, 'g'), surfero.data.numCampeonatosDisputados.cantidad)
+        .replace(new RegExp(Surferos.plantillaTags.EVENTO, 'g'), surfero.data.numCampeonatosDisputados.evento)
+        .replace(new RegExp(Surferos.plantillaTags["AÑOS COMPITIENDO"], 'g'), surfero.data.añosCompitiendo)
         .replace(new RegExp(Surferos.plantillaTags.PUNTUACION, 'g'), surfero.data.puntuacion)
-        .replace(new RegExp(Surferos.plantillaTags["NUM VICTORIAS"], 'g'), surfero.data.numvictorias)
+        .replace(new RegExp(Surferos.plantillaTags["NUM VICTORIAS"], 'g'), surfero.data.numVictorias)
 }
 
 /**
