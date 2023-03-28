@@ -63,6 +63,42 @@ Surferos.plantillaTablaPersonas.pie = `        </tbody>
 
 
 
+
+//-----------------------------------------------------------------------------------------------------------------------
+
+Surferos.plantillaTablaNombres = {}
+
+
+// Cabecera de la tabla
+Surferos.plantillaTablaNombres.cabecera = `
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+                    <table width="100%" class="listado-personas">
+                    <thead>
+                        <th width="15%">Id</th>
+                        <th width="10%">Nombre</th>
+                    </thead>
+                    <tbody>
+    `;
+
+// Elemento TR que muestra los datos de una persona
+Surferos.plantillaTablaNombres.cuerpo = `
+    <tr title="${Surferos.plantillaTags.ID}">
+        <td>${Surferos.plantillaTags.ID}</td>
+        <td>${Surferos.plantillaTags.NOMBRE}</td>
+    </tr>
+    `;
+
+// Pie de la tabla
+Surferos.plantillaTablaNombres.pie = `        </tbody>
+             </table>
+             `;
+
+
+
 /**
  * Actualiza el cuerpo de la plantilla deseada con los datos de la persona que se le pasa
  * @param {String} Plantilla Cadena conteniendo HTML en la que se desea cambiar lso campos de la plantilla por datos
@@ -83,6 +119,7 @@ Surferos.sustituyeTags = function (plantilla, surfero) {
         .replace(new RegExp(Surferos.plantillaTags["NUM VICTORIAS"], 'g'), surfero.data.numVictorias)
 }
 
+
 /**
  * Actualiza el cuerpo de la tabla con los datos de la persona que se le pasa
  * @param {Surferos} Surferos Objeto con los datos de la persona que queremos escribir en el TR
@@ -91,6 +128,16 @@ Surferos.sustituyeTags = function (plantilla, surfero) {
 Surferos.plantillaTablaPersonas.actualiza = function (surfero) {
     return Surferos.sustituyeTags(this.cuerpo, surfero)
 }
+
+/**
+ * Actualiza el cuerpo de la tabla con los datos de la persona que se le pasa
+ * @param {Surferos} Surferos Objeto con los datos de la persona que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */
+Surferos.plantillaTablaNombres.actualiza = function (surfero) {
+    return Surferos.sustituyeTags(this.cuerpo, surfero)
+}
+
 
 
 /**
@@ -107,8 +154,28 @@ Surferos.imprimeMuchasPersonas = function (vector) {
     msj += Surferos.plantillaTablaPersonas.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
-    Frontend.Article.actualizar("Listado de personas", msj)
+    Frontend.Article.actualizar("Listado de datos completo", msj)
 }
+
+
+
+/**
+ * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
+ * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
+ */
+
+Surferos.imprimeMuchasPersonasN = function (vector) {
+    // console.log(vector) // Para comprobar lo que hay en vector
+
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Surferos.plantillaTablaNombres.cabecera
+    vector.forEach(e => msj += Surferos.plantillaTablaNombres.actualiza(e))
+    msj += Surferos.plantillaTablaNombres.pie
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Listado de nombres", msj)
+}
+
 
 /**
  * Función que recuperar todas las personas llamando al MS Personas
@@ -149,4 +216,11 @@ Surferos.listar = function () {
  */
 Surferos.procesarListaNombres = function () {
     this.descargarRuta("/surferos/getTodas", this.imprimeMuchasPersonas);
+}
+
+/**
+ * Función principal para recuperar las personas desde el MS y, posteriormente, imprimirlas.
+ */
+Surferos.listarNombres = function () {
+    Surferos.recupera(Surferos.imprimeMuchasPersonasN);
 }
