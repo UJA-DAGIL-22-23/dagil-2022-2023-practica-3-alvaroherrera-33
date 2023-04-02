@@ -39,7 +39,6 @@ describe('Servidor PLANTILLA:', () => {
           //console.log( "BODY ACERCA DE ", res.body ); // Para comprobar qué contiene exactamente res.body
           assert(res.body.hasOwnProperty('mensaje'));
           assert(res.body.mensaje === "Microservicio MS Plantilla: acerca de");
-
         })
         .end((error) => { error ? done.fail(error) : done() })
     });
@@ -66,19 +65,6 @@ describe('Servidor PLANTILLA:', () => {
         );
     });
 
-   /*it('Devuelve carlos@hotmail.com al recuperar los datos de la Persona con id 354047338258366678 mediante getPorId', (done) => {
-      supertest(app)
-        .get('/getPorId/354047338258366678')
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .expect(function (res) {
-          //console.log( res.body ); // Para comprobar qué contiene exactamente res.body
-          assert(res.body.data.hasOwnProperty('email'));
-          assert(res.body.data.email === "ana.alvarez@gmail.com");
-        })
-        .end((error) => { error ? done.fail(error) : done(); }
-        );
-    });*/
 
   })
 });

@@ -70,19 +70,10 @@ Surferos.plantillaTablaNombres = {}
 
 
 // Cabecera de la tabla
-Surferos.plantillaTablaNombres.cabecera = `
-<style>
-table, th, td {
-  border: 1px solid black;
+Surferos.plantillaTablaNombres.cabecera = function()
+{ 
+    return `<style>table, th, td {border: 1px solid black;}</style><table width="100%" class="listado-personas"><thead><th width="15%">Id</th><th width="10%">Nombre</th></thead><tbody>`;
 }
-</style>
-                    <table width="100%" class="listado-personas">
-                    <thead>
-                        <th width="15%">Id</th>
-                        <th width="10%">Nombre</th>
-                    </thead>
-                    <tbody>
-    `;
 
 // Elemento TR que muestra los datos de una persona
 Surferos.plantillaTablaNombres.cuerpo = `
@@ -93,9 +84,10 @@ Surferos.plantillaTablaNombres.cuerpo = `
     `;
 
 // Pie de la tabla
-Surferos.plantillaTablaNombres.pie = `        </tbody>
-             </table>
-             `;
+Surferos.plantillaTablaNombres.pie = function()
+{
+    return "</tbody></table>";
+}
 
 
 
@@ -168,9 +160,9 @@ Surferos.imprimeMuchasPersonasN = function (vector) {
     // console.log(vector) // Para comprobar lo que hay en vector
 
     // Compongo el contenido que se va a mostrar dentro de la tabla
-    let msj = Surferos.plantillaTablaNombres.cabecera
+    let msj = Surferos.plantillaTablaNombres.cabecera()
     vector.forEach(e => msj += Surferos.plantillaTablaNombres.actualiza(e))
-    msj += Surferos.plantillaTablaNombres.pie
+    msj += Surferos.plantillaTablaNombres.pie()
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de nombres", msj)

@@ -39,5 +39,18 @@ describe('Servidor FRONT-END:', () => {
           })
           .end((error) => { error ? done.fail(error) : done() })
       });
+      it('Ruta /prueba/ruta/larga.html', (done) => {
+        supertest(app)
+          .get('/prueba/ruta/larga.html')
+          .expect(200)
+          .expect('Content Type', /html/)
+          .expect(function (res) {
+            //console.log( res.text ); // Para comprobar qué contiene exactamente res.text
+            assert(res.text.includes('<h1>Aplicación Microservicios Plantilla</h1>'));
+            assert(res.text.includes('<article id="seccion-principal" class="ocultar"> ')>=0)
+  
+          })
+          .end((error) => { error ? done.fail(error) : done() })
+      });
   })
 })
