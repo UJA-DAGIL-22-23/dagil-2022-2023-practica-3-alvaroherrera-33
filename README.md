@@ -208,3 +208,11 @@ Ver la información de todos los surferos al pulsar en el botón “Listado de d
 
 
 <img src='img/trello-hu2.png' width='1400px'>
+
+## HISTORIA DE USUARIO 3
+Ver el nombre y el id de todos los surferos al pulsar en el botón “Listado de nombre” 
+
+<img src='img/hu3.png' width='1400px'>
+
+
+<img src='img/trello-hu3.png' width='1400px'>
