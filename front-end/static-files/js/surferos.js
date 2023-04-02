@@ -149,8 +149,6 @@ Surferos.imprimeMuchasPersonas = function (vector) {
     Frontend.Article.actualizar("Listado de datos completo", msj)
 }
 
-
-
 /**
  * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
  * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
@@ -215,4 +213,44 @@ Surferos.procesarListaNombres = function () {
  */
 Surferos.listarNombres = function () {
     Surferos.recupera(Surferos.imprimeMuchasPersonasN);
+}
+
+
+/**
+ * Función para guardar los nuevos datos de una persona
+ */
+Personas.guardar = async function () {
+    try {
+        let url = Frontend.API_GATEWAY + "/surferos/setTodo/"
+        let id_persona = document.getElementById("form-persona-id").value
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'no-cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'omit', // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify({
+                "id_persona": id_persona,
+                "nombre_persona": document.getElementById("form-persona-nombre").value,
+                "apellidos_persona": document.getElementById("form-persona-apellidos").value,
+                "email_persona": document.getElementById("form-persona-email").value,
+                "año_entrada_persona": document.getElementById("form-persona-anio").value
+            }), // body data type must match "Content-Type" header
+        })
+        /*
+        Error: No procesa bien la respuesta devuelta
+        if (response) {
+            const persona = await response.json()
+            alert(persona)
+        }
+        */
+        Personas.mostrar(id_persona)
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway " + error)
+        //console.error(error)
+    }
 }
