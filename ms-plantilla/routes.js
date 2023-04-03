@@ -66,6 +66,10 @@ router.get("/getTodas", async (req, res) => {
 
 
 
+router.param("idSurfero", (req, res, next, id) => {
+    next();
+});
+
 /**
  * Devuelve los datos de la persona con el id pasado
  */

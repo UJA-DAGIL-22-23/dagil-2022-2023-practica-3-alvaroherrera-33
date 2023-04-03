@@ -130,8 +130,6 @@ Surferos.plantillaTablaNombres.actualiza = function (surfero) {
     return Surferos.sustituyeTags(this.cuerpo, surfero)
 }
 
-
-
 /**
  * Función para mostrar en pantalla todas las personas que se han recuperado de la BBDD.
  * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
@@ -219,7 +217,7 @@ Surferos.listarNombres = function () {
 /**
  * Función para guardar los nuevos datos de una persona
  */
-Personas.guardar = async function () {
+Surferos.guardar = async function () {
     try {
         let url = Frontend.API_GATEWAY + "/surferos/setTodo/"
         let id_persona = document.getElementById("form-persona-id").value
@@ -234,11 +232,16 @@ Personas.guardar = async function () {
             redirect: 'follow', // manual, *follow, error
             referrer: 'no-referrer', // no-referrer, *client
             body: JSON.stringify({
-                "id_persona": id_persona,
-                "nombre_persona": document.getElementById("form-persona-nombre").value,
-                "apellidos_persona": document.getElementById("form-persona-apellidos").value,
-                "email_persona": document.getElementById("form-persona-email").value,
-                "año_entrada_persona": document.getElementById("form-persona-anio").value
+                "id": id_persona,
+                "nombre": document.getElementById("form-persona-nombre").value,
+                "apellidos": document.getElementById("form-persona-apellidos").value,
+                "ciudad": document.getElementById("form-persona-ciudad").value,
+                "pais": document.getElementById("form-persona-pais").value,
+                "cantidad": document.getElementById("form-persona-cantidad").value,
+                "evento": document.getElementById("form-persona-evento").value,
+                "añosCompitiendo": document.getElementById("form-persona-añosCompitiendo").value,
+                "puntuacion": document.getElementById("form-persona-puntuacion").value,
+                "numVictorias": document.getElementById("form-persona-numVictorias").value
             }), // body data type must match "Content-Type" header
         })
         /*
@@ -254,3 +257,278 @@ Personas.guardar = async function () {
         //console.error(error)
     }
 }
+
+/// Nombre de los campos del formulario para editar una persona
+Surferos.form = {
+    NOMBRE: "form-persona-nombre",
+    APELLIDOS: "form-persona-apellidos",
+    CIUDAD: "form-persona-ciudad",
+    PAIS: "form-persona-pais",
+    CANTIDAD: "form-persona-cantidad",
+    EVENTO: "form-persona-evento",
+    AÑOSCOMPITIENDO: "form-persona-añosCompitiendo",
+    PUNTUACION: "form-persona-puntuacion",
+    NUMVICTORIAS: "form-persona-numVictorias",
+}
+
+/// Objeto para almacenar los datos de la persona que se está mostrando
+Surferos.personaMostrada = null
+
+Surferos.plantillaFormularioPersona = {}
+
+// Cabecera del formulario
+Surferos.plantillaFormularioPersona.formulario = `
+<form method='post' action=''>
+    <table width="100%" class="listado-personas">
+        <thead>
+        <th width="15%">Id</th>
+        <th width="10%">Nombre</th>
+        <th width="10%">Apellidos</th>
+        <th width="15%">Lugar nacimiento</th>
+        <th width="25%">Numero de campeonatos disputados</th>
+        <th width="20%">Años compitiendo</th>
+        <th width="10%">Puntuación máxima</th>
+        <th width="5%">Numero de victorias</th>
+        </thead>
+        <tbody>
+            <tr title="${Surferos.plantillaTags.ID}">
+                <td><input type="text" class="form-persona-elemento" disabled id="form-persona-id"
+                        value="${Surferos.plantillaTags.ID}" 
+                        name="id_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-nombre" required value="${Surferos.plantillaTags.NOMBRE}" 
+                        name="nombre_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-apellidos" value="${Surferos.plantillaTags.APELLIDOS}" 
+                        name="apellidos_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-ciudad" required value="${Surferos.plantillaTags["CIUDAD"]}, ${Surferos.plantillaTags["PAIS"]}" 
+                        name="email_persona"/></td>
+                <td><input type="text" class="form-persona-elemento editable" disabled
+                        id="form-persona-pais" required value="${Surferos.plantillaTags.NUM}, ${Surferos.plantillaTags.EVENTO}" 
+                        name="año_entrada_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-añosCompitiendo" required
+                        value="${Surferos.plantillaTags["AÑOS COMPITIENDO"]}" 
+                        name="año_entrada_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-puntuacion" required value="${Surferos.plantillaTags.PUNTUACION}" 
+                        name="email_persona"/></td>
+                <td><input type="number" class="form-persona-elemento editable" disabled
+                        id="form-persona-numVictorias" required value="${Surferos.plantillaTags["NUM VICTORIAS"]}" 
+                        name="email_persona"/></td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+                <br/>
+                <td>
+                    <div><a href="javascript:Surferos.editar()" class="opcion-secundaria mostrar">Editar</a></div>
+                    <div><a href="javascript:Surferos.guardar()" class="opcion-terciaria editar ocultar">Guardar</a></div>
+                    <div><a href="javascript:Surferos.cancelar()" class="opcion-terciaria editar ocultar">Cancelar</a></div>
+                </td>
+</form>
+`;
+
+
+
+/**
+ * Imprime los datos de una persona como una tabla dentro de un formulario usando la plantilla del formulario.
+ * @param {persona} Persona Objeto con los datos de la persona
+ * @returns Una cadena con la tabla que tiene ya los datos actualizados
+ */
+Surferos.personaComoFormulario = function (surfero) {
+    return Surferos.plantillaFormularioPersona.actualiza( surfero );
+}
+
+/**
+ * Actualiza el formulario con los datos de la persona que se le pasa
+ * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */
+Surferos.plantillaFormularioPersona.actualiza = function (surfero) {
+    return Surferos.sustituyeTags(this.formulario, surfero)
+}
+
+/**
+ * Imprime los datos de una persona como una tabla usando la plantilla del formulario.
+ * @param {persona} Persona Objeto con los datos de la persona
+ * @returns Una cadena con la tabla que tiene ya los datos actualizados
+ */
+Surferos.personaComoTabla = function (surfero) {
+    return Surferos.plantillaTablaPersonas.cabecera
+        + Surferos.plantillaTablaPersonas.actualiza(surfero)
+        + Surferos.plantillaTablaPersonas.pie;
+}
+
+/**
+ * Almacena los datos de la persona que se está mostrando
+ * @param {Persona} persona Datos de la persona a almacenar
+ */
+
+Surferos.almacenaDatos = function (surfero) {
+    Surferos.personaMostrada = surfero;
+}
+
+/**
+ * Recupera los valores almacenados de la persona que se estaba mostrando
+ * @return Datos de la persona a almacenada
+ */
+
+Surferos.recuperaDatosAlmacenados = function () {
+    return this.personaMostrada;
+}
+
+/**
+ * Función para mostrar en pantalla los detalles de una persona que se ha recuperado de la BBDD por su id
+ * @param {Persona} persona Datos de la persona a mostrar
+ */
+
+Surferos.imprimeUnaPersona = function (surfero) {
+    // console.log(persona) // Para comprobar lo que hay en vector
+    let msj = Surferos.personaComoFormulario(surfero);
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Mostrar una persona", msj)
+
+    // Actualiza el objeto que guarda los datos mostrados
+    Surferos.almacenaDatos(surfero)
+}
+
+/**
+ * Función que recuperar todas las personas llamando al MS Personas. 
+ * Posteriormente, llama a la función callBackFn para trabajar con los datos recuperados.
+ * @param {String} idSurfero Identificador de la persona a mostrar
+ * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
+Surferos.recuperaUnaPersona = async function (idSurfero, callBackFn) {
+    try {
+        const url = Frontend.API_GATEWAY + "/surferos/getPorId/" + idSurfero
+        const response = await fetch(url);
+        if (response) {
+            const persona = await response.json()
+            callBackFn(persona)
+        }
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+}
+
+/**
+ * Función principal para mostrar los datos de una persona desde el MS y, posteriormente, imprimirla.
+ * @param {String} idSurfero Identificador de la persona a mostrar
+ */
+Surferos.mostrar = function (idSurfero) {
+    this.recuperaUnaPersona(idSurfero, this.imprimeUnaPersona);
+}
+
+/**
+ * Establece disable = habilitando en los campos editables
+ * @param {boolean} Deshabilitando Indica si queremos deshabilitar o habilitar los campos
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Surferos.habilitarDeshabilitarCamposEditables = function (deshabilitando) {
+    deshabilitando = (typeof deshabilitando === "undefined" || deshabilitando === null) ? true : deshabilitando
+    for (let campo in Surferos.form) {
+        document.getElementById(Surferos.form[campo]).disabled = deshabilitando
+    }
+    return this
+}
+
+
+/**
+ * Establece disable = true en los campos editables
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Surferos.deshabilitarCamposEditables = function () {
+    Surferos.habilitarDeshabilitarCamposEditables(true)
+    return this
+}
+
+
+/**
+ * Establece disable = false en los campos editables
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Surferos.habilitarCamposEditables = function () {
+    Surferos.habilitarDeshabilitarCamposEditables(false)
+    return this
+}
+
+
+/**
+ * ????Muestra las opciones que tiene el usuario cuando selecciona Editar
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Surferos.opcionesMostrarOcultar = function (classname, mostrando) {
+    let opciones = document.getElementsByClassName(classname)
+    let claseQuitar = mostrando ? Frontend.CLASS_OCULTAR : Frontend.CLASS_MOSTRAR
+    let claseAniadir = !mostrando ? Frontend.CLASS_OCULTAR : Frontend.CLASS_MOSTRAR
+
+    for (let i = 0; i < opciones.length; ++i) {
+        Frontend.quitarClase(opciones[i], claseQuitar)
+            .aniadirClase(opciones[i], claseAniadir)
+    }
+    return this
+}
+
+/**
+ * Oculta todas las opciones secundarias
+ * @returns El propio objeto para encadenar llamadas
+ */
+Surferos.ocultarOpcionesSecundarias = function () {
+    this.opcionesMostrarOcultar("opcion-secundaria", false)
+    return this
+}
+
+
+/**
+ * Muestra todas las opciones secundarias
+ * @returns El propio objeto para encadenar llamadas
+ */
+Surferos.mostrarOpcionesSecundarias = function () {
+    this.opcionesMostrarOcultar("opcion-secundaria", true)
+    return this
+}
+
+
+/**
+ * Muestra las opciones que tiene el usuario cuando selecciona Editar
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Surferos.mostrarOcionesTerciariasEditar = function () {
+    this.opcionesMostrarOcultar("opcion-terciaria editar", true)
+    return this
+}
+
+
+/**
+ * Oculta las opciones que tiene el usuario cuando selecciona Editar
+ * @returns El propio objeto Personas, para concatenar llamadas
+ */
+Surferos.ocultarOcionesTerciariasEditar = function () {
+    this.opcionesMostrarOcultar("opcion-terciaria editar", false)
+    return this
+}
+
+
+/**
+ * Función que permite modificar los datos de una persona
+ */
+Surferos.editar = function () {
+    this.ocultarOpcionesSecundarias()
+    this.mostrarOcionesTerciariasEditar()
+    this.habilitarCamposEditables()
+}
+
+/**
+ * Función que permite cancelar la acción sobre los datos de una persona
+ */
+Surferos.cancelar = function () {
+    this.imprimeUnaPersona(this.recuperaDatosAlmacenados())
+    this.deshabilitarCamposEditables()
+    this.ocultarOcionesTerciariasEditar()
+    this.mostrarOpcionesSecundarias()
+}
+

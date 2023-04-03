@@ -124,7 +124,7 @@ const CB_MODEL_SELECTS = {
         //console.log("SETTODO data es", data)
         let persona = await client.query(
             q.Update(
-                q.Ref(q.Collection(COLLECTION), data.idSurfero),
+                q.Ref(q.Collection(COLLECTION), req.params.idSurfero),
                 {
                     data: {
                         nombre: data.nombre,
