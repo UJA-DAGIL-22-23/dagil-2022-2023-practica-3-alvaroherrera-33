@@ -22,44 +22,13 @@ Surferos.plantillaTablaPersonas = {}
 
 
 // Cabecera de la tabla
-Surferos.plantillaTablaPersonas.cabecera = `
-<style>
-table, th, td {
-  border: 1px solid black;
-}
-</style>
-                    <table width="100%" class="listado-personas">
-                    <thead>
-                        <th width="15%">Id</th>
-                        <th width="10%">Nombre</th>
-                        <th width="10%">Apellidos</th>
-                        <th width="15%">Lugar nacimiento</th>
-                        <th width="15%">Numero de campeonatos disputados</th>
-                        <th width="20%">Años compitiendo</th>
-                        <th width="10%">Puntuación máxima</th>
-                        <th width="10%">Numero de victorias</th>
-                    </thead>
-                    <tbody>
-    `;
+Surferos.plantillaTablaPersonas.cabecera = `<style>table, th, td { border: 1px solid black;}</style><table width="100%" class="listado-personas"><thead><th width="15%">Id</th><th width="10%">Nombre</th><th width="10%">Apellidos</th><th width="15%">Lugar nacimiento</th><th width="15%">Numero de campeonatos disputados</th><th width="20%">Años compitiendo</th><th width="10%">Puntuación máxima</th><th width="10%">Numero de victorias</th></thead><tbody>`;
 
 // Elemento TR que muestra los datos de una persona
-Surferos.plantillaTablaPersonas.cuerpo = `
-    <tr title="${Surferos.plantillaTags.ID}">
-        <td>${Surferos.plantillaTags.ID}</td>
-        <td>${Surferos.plantillaTags.NOMBRE}</td>
-        <td>${Surferos.plantillaTags.APELLIDOS}</td>
-        <td>${Surferos.plantillaTags.CIUDAD}, ${Surferos.plantillaTags.PAIS}</td>
-        <td>${Surferos.plantillaTags.NUM}  (${Surferos.plantillaTags.EVENTO})</td>
-        <td>${Surferos.plantillaTags["AÑOS COMPITIENDO"]}</td>
-        <td>${Surferos.plantillaTags.PUNTUACION}</td>
-        <td>${Surferos.plantillaTags["NUM VICTORIAS"]}</td>
-    </tr>
-    `;
+Surferos.plantillaTablaPersonas.cuerpo = `<tr title="${Surferos.plantillaTags.ID}"><td>${Surferos.plantillaTags.ID}</td><td>${Surferos.plantillaTags.NOMBRE}</td><td>${Surferos.plantillaTags.APELLIDOS}</td><td>${Surferos.plantillaTags.CIUDAD}, ${Surferos.plantillaTags.PAIS}</td><td>${Surferos.plantillaTags.NUM} (${Surferos.plantillaTags.EVENTO})</td><td>${Surferos.plantillaTags["AÑOS COMPITIENDO"]}</td><td>${Surferos.plantillaTags.PUNTUACION}</td><td>${Surferos.plantillaTags["NUM VICTORIAS"]}</td></tr>`;
 
 // Pie de la tabla
-Surferos.plantillaTablaPersonas.pie = `        </tbody>
-             </table>
-             `;
+Surferos.plantillaTablaPersonas.pie = `</tbody></table>`;
 
 
 
@@ -532,3 +501,32 @@ Surferos.cancelar = function () {
     this.mostrarOpcionesSecundarias()
 }
 
+Surferos.procesarListarNombresOrdenados = function () {
+    this.recupera(this.imprimexNombre);
+}
+
+
+
+Surferos.ordenarPorNombre = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.nombre.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.nombre.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+
+Surferos.imprimexNombre = function (vector) {
+    Surferos.ordenarPorNombre(vector); // ordena el vector por nombre
+    let mensaje = "";
+    mensaje += Surferos.plantillaTablaNombres.cabecera();
+    vector.forEach(e => mensaje+= Surferos.plantillaTablaNombres.actualiza(e))
+    mensaje += Surferos.plantillaTablaNombres.pie();
+
+    Frontend.Article.actualizar("Listado de personas ordenado por nombre", mensaje);
+}

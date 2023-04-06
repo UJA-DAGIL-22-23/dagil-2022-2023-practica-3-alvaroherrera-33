@@ -216,3 +216,11 @@ Ver el nombre y el id de todos los surferos al pulsar en el botón “Listado de
 
 
 <img src='img/trello-hu3.png' width='1400px'>
+
+## HISTORIA DE USUARIO 4
+Ver un listado solo con los nombres de todos los jugadores/equipos ordenados alfabéticamente al pulsar "Listado alfabéticamente"
+
+<img src='img/hu4.png' width='1400px'>
+
+
+<img src='img/trello-hu4.png' width='1400px'>
