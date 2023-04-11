@@ -45,12 +45,14 @@ Surferos.plantillaTablaNombres.cabecera = function()
 }
 
 // Elemento TR que muestra los datos de una persona
-Surferos.plantillaTablaNombres.cuerpo = `
-    <tr title="${Surferos.plantillaTags.ID}">
-        <td>${Surferos.plantillaTags.ID}</td>
-        <td>${Surferos.plantillaTags.NOMBRE}</td>
-    </tr>
-    `;
+Surferos.plantillaTablaNombres.cuerpo = function(campo)
+{
+    if(campo = "NOMBRE")
+    return  "<tr title='"+ Surferos.plantillaTags.ID +"'><td>"+ Surferos.plantillaTags.ID+ "</td><td>" + Surferos.plantillaTags.NOMBRE + "</td></tr>";
+    else if(campo = "APELLIDOS")
+    return  "<tr title='"+ Surferos.plantillaTags.ID +"'><td>"+ Surferos.plantillaTags.ID+ "</td><td>" + Surferos.plantillaTags.APELLIDOS + "</td></tr>";
+
+}
 
 // Pie de la tabla
 Surferos.plantillaTablaNombres.pie = function()
@@ -95,8 +97,8 @@ Surferos.plantillaTablaPersonas.actualiza = function (surfero) {
  * @param {Surferos} Surferos Objeto con los datos de la persona que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */
-Surferos.plantillaTablaNombres.actualiza = function (surfero) {
-    return Surferos.sustituyeTags(this.cuerpo, surfero)
+Surferos.plantillaTablaNombres.actualiza = function (surfero, campo) {
+    return Surferos.sustituyeTags(this.cuerpo(campo), surfero)
 }
 
 /**
@@ -500,9 +502,30 @@ Surferos.cancelar = function () {
     this.ocultarOcionesTerciariasEditar()
     this.mostrarOpcionesSecundarias()
 }
-
+/*
+'), surfero.ref['@ref'].id)
+        .replace(new RegExp(Surferos.plantillaTags.NOMBRE, 'g'), surfero.data.nombre)
+        .replace(new RegExp(Surferos.plantillaTags.APELLIDOS, 'g'), surfero.data.apellidos)
+        .replace(new RegExp(Surferos.plantillaTags["CIUDAD"], 'g'), surfero.data.lugarNacimiento.ciudad)
+        .replace(new RegExp(Surferos.plantillaTags["PAIS"], 'g'), surfero.data.lugarNacimiento.pais)
+        .replace(new RegExp(Surferos.plantillaTags.NUM, 'g'), surfero.data.numCampeonatosDisputados.cantidad)
+        .replace(new RegExp(Surferos.plantillaTags.EVENTO, 'g'), surfero.data.numCampeonatosDisputados.evento)
+        .replace(new RegExp(Surferos.plantillaTags["AÑOS COMPITIENDO"], 'g'), surfero.data.añosCompitiendo)
+        .replace(new RegExp(Surferos.plantillaTags.PUNTUACION, 'g'), surfero.data.puntuacion)
+        .replace(new RegExp(Surferos.plantillaTags["NUM VICTORIAS"], 'g'), surfero.data.numVictorias)
+        */
 Surferos.procesarListarNombresOrdenados = function () {
-    this.recupera(this.imprimexNombre);
+    this.recupera(this.imprimexNombre,"NOMBRE");
+}
+
+Surferos.procesarListarApellidosOrdenados = function () {
+    this.recupera(this.imprimexNombre(Surferos, "APELLIDOS"));
+}
+Surferos.procesarListarCiudadOrdenados = function () {
+    this.recupera(this.imprimexNombre,'["CIUDAD"]');
+}
+Surferos.procesarListarPaisOrdenados = function () {
+    this.recupera(this.imprimexNombre,'["PAIS"]');
 }
 
 
@@ -520,12 +543,106 @@ Surferos.ordenarPorNombre = function (vector) {
         return 0;
     });
 }
+Surferos.ordenarPorApellido = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.apellidos.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.apellidos.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+Surferos.ordenarPorCiudad = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.lugarNacimiento.ciudad.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.lugarNacimiento.ciudad.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+Surferos.ordenarPorPais = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.lugarNacimiento.pais.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.lugarNacimiento.pais.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
 
-Surferos.imprimexNombre = function (vector) {
+Surferos.ordenarPorVictoriasEv = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.numCampeonatosDisputados.cantidad.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.numCampeonatosDisputados.cantidad.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+
+Surferos.ordenarPorEvento = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.numCampeonatosDisputados.evento.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.numCampeonatosDisputados.evento.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+
+Surferos.ordenarPorPuntuacion = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.puntuacion.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.puntuacion.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+Surferos.ordenarPorVictorias = function (vector) {
+    vector.sort(function(a, b){
+        var nombreA = a.data.numVictorias.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.numVictorias.toUpperCase();
+        if (nombreA < nombreB) {
+            return -1;
+        }
+        if (nombreA > nombreB) {
+            return 1;
+        }
+        return 0;
+    });
+}
+Surferos.imprimexNombre = function (vector, campo) {
+
     Surferos.ordenarPorNombre(vector); // ordena el vector por nombre
     let mensaje = "";
     mensaje += Surferos.plantillaTablaNombres.cabecera();
-    vector.forEach(e => mensaje+= Surferos.plantillaTablaNombres.actualiza(e))
+    vector.forEach(e => mensaje+= Surferos.plantillaTablaNombres.actualiza(e,campo))
     mensaje += Surferos.plantillaTablaNombres.pie();
 
     Frontend.Article.actualizar("Listado de personas ordenado por nombre", mensaje);
