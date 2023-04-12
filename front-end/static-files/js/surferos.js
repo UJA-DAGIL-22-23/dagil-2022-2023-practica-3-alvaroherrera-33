@@ -3,6 +3,7 @@
 /// Creo el espacio de nombres
 let Surferos = {};
 
+let num = 0;
 
 Surferos.plantillaTags = {
     "ID": "### ID ###",
@@ -515,19 +516,12 @@ Surferos.cancelar = function () {
         .replace(new RegExp(Surferos.plantillaTags["NUM VICTORIAS"], 'g'), surfero.data.numVictorias)
         */
 Surferos.procesarListarNombresOrdenados = function () {
-    this.recupera(this.imprimexNombre,"NOMBRE");
+    this.recupera(this.imprimexNombre);
 }
 
 Surferos.procesarListarApellidosOrdenados = function () {
-    this.recupera(this.imprimexNombre(Surferos, "APELLIDOS"));
+    this.recupera(this.imprimexApellidos);
 }
-Surferos.procesarListarCiudadOrdenados = function () {
-    this.recupera(this.imprimexNombre,'["CIUDAD"]');
-}
-Surferos.procesarListarPaisOrdenados = function () {
-    this.recupera(this.imprimexNombre,'["PAIS"]');
-}
-
 
 
 Surferos.ordenarPorNombre = function (vector) {
@@ -585,8 +579,8 @@ Surferos.ordenarPorPais = function (vector) {
 
 Surferos.ordenarPorVictoriasEv = function (vector) {
     vector.sort(function(a, b){
-        var nombreA = a.data.numCampeonatosDisputados.cantidad.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
-        var nombreB = b.data.numCampeonatosDisputados.cantidad.toUpperCase();
+        var nombreA = a.data.numCampeonatosDisputados.cantidad; // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.numCampeonatosDisputados.cantidad;
         if (nombreA < nombreB) {
             return -1;
         }
@@ -613,8 +607,8 @@ Surferos.ordenarPorEvento = function (vector) {
 
 Surferos.ordenarPorPuntuacion = function (vector) {
     vector.sort(function(a, b){
-        var nombreA = a.data.puntuacion.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
-        var nombreB = b.data.puntuacion.toUpperCase();
+        var nombreA = a.data.puntuacion; // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.puntuacion;
         if (nombreA < nombreB) {
             return -1;
         }
@@ -626,8 +620,8 @@ Surferos.ordenarPorPuntuacion = function (vector) {
 }
 Surferos.ordenarPorVictorias = function (vector) {
     vector.sort(function(a, b){
-        var nombreA = a.data.numVictorias.toUpperCase(); // convierte los nombres a mayúsculas para ordenar correctamente
-        var nombreB = b.data.numVictorias.toUpperCase();
+        var nombreA = a.data.numVictorias; // convierte los nombres a mayúsculas para ordenar correctamente
+        var nombreB = b.data.numVictorias;
         if (nombreA < nombreB) {
             return -1;
         }
@@ -637,13 +631,40 @@ Surferos.ordenarPorVictorias = function (vector) {
         return 0;
     });
 }
-Surferos.imprimexNombre = function (vector, campo) {
+Surferos.imprimexNombre = function (vector,campo) {
 
     Surferos.ordenarPorNombre(vector); // ordena el vector por nombre
     let mensaje = "";
     mensaje += Surferos.plantillaTablaNombres.cabecera();
     vector.forEach(e => mensaje+= Surferos.plantillaTablaNombres.actualiza(e,campo))
     mensaje += Surferos.plantillaTablaNombres.pie();
+
+    Frontend.Article.actualizar("Listado de personas ordenado por nombre", mensaje);
+}
+Surferos.imprimexApellidos = function (vector,campo) {
+    if(num==0)
+    Surferos.ordenarPorApellido(vector); // ordena el vector por nombre
+    else if(num==1)
+    Surferos.ordenarPorCiudad(vector);
+    else if(num==2)
+    Surferos.ordenarPorPais(vector);
+    else if(num==3)
+    Surferos.ordenarPorVictoriasEv(vector);
+    else if(num==4)
+    Surferos.ordenarPorEvento(vector);
+    else if(num==5)
+    Surferos.ordenarPorPuntuacion(vector);
+    else if(num==6)
+    Surferos.ordenarPorVictorias(vector);
+
+    if(num==6)
+    num=-1;
+    
+    num++;
+    let mensaje = "";
+    mensaje += Surferos.plantillaTablaPersonas.cabecera;
+    vector.forEach(e => mensaje+= Surferos.plantillaTablaPersonas.actualiza(e,campo))
+    mensaje += Surferos.plantillaTablaPersonas.pie;
 
     Frontend.Article.actualizar("Listado de personas ordenado por nombre", mensaje);
 }
