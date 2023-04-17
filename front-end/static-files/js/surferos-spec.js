@@ -1,5 +1,4 @@
 
-
 // SPECS para Jasmine
 
 describe("Pie table ", function () {
@@ -174,4 +173,176 @@ describe('Surferos.personaComoTabla', () => {
  })    
 });
 
+*/// Descripción de la prueba
+describe('Surferos', () => {
+  describe('#ordenarPorVictorias', () => {
+    it('Debería ordenar correctamente un vector de surfistas por número de victorias', () => {
+      // Datos de entrada
+      const vector = [
+        { data: { numVictorias: 3 } },
+        { data: { numVictorias: 1 } },
+        { data: { numVictorias: 5 } }
+      ];
+
+      // Llamada a la función que se está probando
+      Surferos.ordenarPorVictorias(vector);
+
+      // Resultado esperado
+      const resultadoEsperado = [
+        { data: { numVictorias: 1 } },
+        { data: { numVictorias: 3 } },
+        { data: { numVictorias: 5 } }
+      ];
+
+      // Comprueba si el vector ha sido ordenado correctamente
+      for (let i = 0; i < vector.length; i++) {
+        if (vector[i].data.numVictorias !== resultadoEsperado[i].data.numVictorias) {
+          throw new Error(`El vector no está ordenado correctamente en la posición ${i}`);
+        }
+      }
+    });
+  });
+});
+
+// Descripción de la prueba
+describe('Surferos', () => {
+  describe('#ordenarPorPuntuacion', () => {
+    it('Debería ordenar correctamente un vector de surfistas por puntuación', () => {
+      // Datos de entrada
+      const vector = [
+        { data: { puntuacion: 3 } },
+        { data: { puntuacion: 1 } },
+        { data: { puntuacion: 5 } }
+      ];
+
+      // Llamada a la función que se está probando
+      Surferos.ordenarPorPuntuacion(vector);
+
+      // Resultado esperado
+      const resultadoEsperado = [
+        { data: { puntuacion: 1 } },
+        { data: { puntuacion: 3 } },
+        { data: { puntuacion: 5 } }
+      ];
+
+      // Comprueba si el vector ha sido ordenado correctamente
+      for (let i = 0; i < vector.length; i++) {
+        if (vector[i].data.puntuacion !== resultadoEsperado[i].data.puntuacion) {
+          throw new Error(`El vector no está ordenado correctamente en la posición ${i}`);
+        }
+      }
+    });
+  });
+});
+
+// Descripción de la prueba
+describe('Surferos', () => {
+  describe('#ordenarPorEvento', () => {
+    it('Debería ordenar correctamente un vector de surfistas por evento', () => {
+      // Datos de entrada
+      const vector = [
+        { data: { numCampeonatosDisputados: { evento: 'Evento C' } } },
+        { data: { numCampeonatosDisputados: { evento: 'Evento A' } } },
+        { data: { numCampeonatosDisputados: { evento: 'Evento B' } } }
+      ];
+
+      // Llamada a la función que se está probando
+      Surferos.ordenarPorEvento(vector);
+
+      // Resultado esperado
+      const resultadoEsperado = [
+        { data: { numCampeonatosDisputados: { evento: 'Evento A' } } },
+        { data: { numCampeonatosDisputados: { evento: 'Evento B' } } },
+        { data: { numCampeonatosDisputados: { evento: 'Evento C' } } }
+      ];
+
+      // Comprueba si el vector ha sido ordenado correctamente
+      for (let i = 0; i < vector.length; i++) {
+        if (vector[i].data.numCampeonatosDisputados.evento !== resultadoEsperado[i].data.numCampeonatosDisputados.evento) {
+          throw new Error(`El vector no está ordenado correctamente en la posición ${i}`);
+        }
+      }
+    });
+  });
+});
+/*
+// Definir las pruebas
+describe('Surferos.cancelar', () => {
+  it('debe imprimir una persona correctamente', () => {
+    // Mock de los métodos y datos necesarios
+    const personaMock = { nombre: 'Juan', edad: 25 };
+    console.log = jest.fn();
+    Surferos.imprimeUnaPersona = jest.fn();
+    Surferos.recuperaDatosAlmacenados = jest.fn().mockReturnValue(personaMock);
+
+    // Ejecutar la función a probar
+    Surferos.cancelar();
+
+    // Verificar si la función se llamó correctamente
+    expect(console.log).toHaveBeenCalledWith(personaMock);
+    expect(Surferos.imprimeUnaPersona).toHaveBeenCalled();
+    expect(Surferos.recuperaDatosAlmacenados).toHaveBeenCalled();
+  });
+
+  it('debe deshabilitar campos editables correctamente', () => {
+    // Mock de los métodos y datos necesarios
+    const camposEditablesMock = document.querySelectorAll('.campo-editable');
+    camposEditablesMock.forEach = jest.fn();
+    Surferos.deshabilitarCamposEditables = jest.fn();
+
+    // Ejecutar la función a probar
+    Surferos.cancelar();
+
+    // Verificar si la función se llamó correctamente
+    expect(camposEditablesMock.forEach).toHaveBeenCalledWith(expect.any(Function));
+    expect(Surferos.deshabilitarCamposEditables).toHaveBeenCalled();
+  });
+
+  it('debe ocultar opciones terciarias de editar correctamente', () => {
+    // Mock de los métodos y datos necesarios
+    const opcionesTerciariasMock = document.querySelectorAll('.opcion-terciaria-editar');
+    opcionesTerciariasMock.forEach = jest.fn();
+    Surferos.ocultarOcionesTerciariasEditar = jest.fn();
+
+    // Ejecutar la función a probar
+    Surferos.cancelar();
+
+    // Verificar si la función se llamó correctamente
+    expect(opcionesTerciariasMock.forEach).toHaveBeenCalledWith(expect.any(Function));
+    expect(Surferos.ocultarOcionesTerciariasEditar).toHaveBeenCalled();
+  });
+
+  it('debe mostrar opciones secundarias correctamente', () => {
+    // Mock de los métodos y datos necesarios
+    const opcionesSecundariasMock = document.querySelectorAll('.opcion-secundaria');
+    opcionesSecundariasMock.forEach = jest.fn();
+    Surferos.mostrarOpcionesSecundarias = jest.fn();
+
+    // Ejecutar la función a probar
+    Surferos.cancelar();
+
+    // Verificar si la función se llamó correctamente
+    expect(opcionesSecundariasMock.forEach).toHaveBeenCalledWith(expect.any(Function));
+    expect(Surferos.mostrarOpcionesSecundarias).toHaveBeenCalled();
+  });
+});
+
+
+describe('Surferos', function() {
+  beforeEach(function() {
+      // Configurar el objeto Surferos para cada prueba
+  });
+
+  it('debería ocultar las opciones terciarias al llamar a ocultarOpcionesTerciariasEditar', function() {
+      // Act
+      Surferos.ocultarOpcionesTerciariasEditar();
+
+      // Assert
+      // Comprobar que la función opcionesMostrarOcultar es llamada con los argumentos correctos
+      expect(Surferos.opcionesMostrarOcultar).toHaveBeenCalledWith('opcion-terciaria editar', false);
+  });
+
+  // Otras pruebas aquí
+
+});
 */

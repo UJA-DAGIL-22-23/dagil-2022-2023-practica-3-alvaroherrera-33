@@ -503,18 +503,7 @@ Surferos.cancelar = function () {
     this.ocultarOcionesTerciariasEditar()
     this.mostrarOpcionesSecundarias()
 }
-/*
-'), surfero.ref['@ref'].id)
-        .replace(new RegExp(Surferos.plantillaTags.NOMBRE, 'g'), surfero.data.nombre)
-        .replace(new RegExp(Surferos.plantillaTags.APELLIDOS, 'g'), surfero.data.apellidos)
-        .replace(new RegExp(Surferos.plantillaTags["CIUDAD"], 'g'), surfero.data.lugarNacimiento.ciudad)
-        .replace(new RegExp(Surferos.plantillaTags["PAIS"], 'g'), surfero.data.lugarNacimiento.pais)
-        .replace(new RegExp(Surferos.plantillaTags.NUM, 'g'), surfero.data.numCampeonatosDisputados.cantidad)
-        .replace(new RegExp(Surferos.plantillaTags.EVENTO, 'g'), surfero.data.numCampeonatosDisputados.evento)
-        .replace(new RegExp(Surferos.plantillaTags["AÑOS COMPITIENDO"], 'g'), surfero.data.añosCompitiendo)
-        .replace(new RegExp(Surferos.plantillaTags.PUNTUACION, 'g'), surfero.data.puntuacion)
-        .replace(new RegExp(Surferos.plantillaTags["NUM VICTORIAS"], 'g'), surfero.data.numVictorias)
-        */
+
 Surferos.procesarListarNombresOrdenados = function () {
     this.recupera(this.imprimexNombre);
 }
