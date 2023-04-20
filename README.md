@@ -234,9 +234,8 @@ Ver un listado que muestra los datos de los surferos por camposal pulsar "Pulse 
 
 
 ## HISTORIA DE USUARIO 6
-Ver un listado que muestra los datos de los surferos por campos al pulsar "Pulse para ordenar por campos"
+Muestra los datos de una persona como ejemplo al pulsar "Mostrar una persona de ejemplo"
 
 <img src='img/hu6.png' width='1400px'>
-Muestra los datos de una persona como ejemplo al pulsar "Mostrar una persona de ejemplo"
 
 <img src='img/trello-hu5.png' width='1400px'>

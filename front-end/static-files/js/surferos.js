@@ -193,6 +193,15 @@ Surferos.guardar = async function () {
     try {
         let url = Frontend.API_GATEWAY + "/surferos/setTodo/"
         let id_persona = document.getElementById("form-persona-id").value
+        let datosGuardar ={
+            "id": id_persona,
+            "nombre": document.getElementById("form-persona-nombre").value,
+            "apellidos": document.getElementById("form-persona-apellidos").value,
+            "ciudad": document.getElementById("form-persona-ciudad").value,
+            "pais": document.getElementById("form-persona-pais").value,
+            "puntuacion": document.getElementById("form-persona-puntuacion").value,
+            "numVictorias": document.getElementById("form-persona-numVictorias").value
+        }
         const response = await fetch(url, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'no-cors', // no-cors, cors, *same-origin
@@ -203,18 +212,7 @@ Surferos.guardar = async function () {
             },
             redirect: 'follow', // manual, *follow, error
             referrer: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify({
-                "id": id_persona,
-                "nombre": document.getElementById("form-persona-nombre").value,
-                "apellidos": document.getElementById("form-persona-apellidos").value,
-                "ciudad": document.getElementById("form-persona-ciudad").value,
-                "pais": document.getElementById("form-persona-pais").value,
-                "cantidad": document.getElementById("form-persona-cantidad").value,
-                "evento": document.getElementById("form-persona-evento").value,
-                "añosCompitiendo": document.getElementById("form-persona-añosCompitiendo").value,
-                "puntuacion": document.getElementById("form-persona-puntuacion").value,
-                "numVictorias": document.getElementById("form-persona-numVictorias").value
-            }), // body data type must match "Content-Type" header
+            body: JSON.stringify(datosGuardar), // body data type must match "Content-Type" header
         })
         /*
         Error: No procesa bien la respuesta devuelta
@@ -223,7 +221,7 @@ Surferos.guardar = async function () {
             alert(persona)
         }
         */
-        Personas.mostrar(id_persona)
+        Surferos.mostrar(id_persona)
     } catch (error) {
         alert("Error: No se han podido acceder al API Gateway " + error)
         //console.error(error)
@@ -236,9 +234,6 @@ Surferos.form = {
     APELLIDOS: "form-persona-apellidos",
     CIUDAD: "form-persona-ciudad",
     PAIS: "form-persona-pais",
-    CANTIDAD: "form-persona-cantidad",
-    EVENTO: "form-persona-evento",
-    AÑOSCOMPITIENDO: "form-persona-añosCompitiendo",
     PUNTUACION: "form-persona-puntuacion",
     NUMVICTORIAS: "form-persona-numVictorias",
 }
@@ -256,9 +251,8 @@ Surferos.plantillaFormularioPersona.formulario = `
         <th width="15%">Id</th>
         <th width="10%">Nombre</th>
         <th width="10%">Apellidos</th>
-        <th width="15%">Lugar nacimiento</th>
-        <th width="25%">Numero de campeonatos disputados</th>
-        <th width="20%">Años compitiendo</th>
+        <th width="15%">Ciudad</th>
+        <th width="25%">País</th>
         <th width="10%">Puntuación máxima</th>
         <th width="5%">Numero de victorias</th>
         </thead>
@@ -274,10 +268,10 @@ Surferos.plantillaFormularioPersona.formulario = `
                         id="form-persona-apellidos" value="${Surferos.plantillaTags.APELLIDOS}" 
                         name="apellidos_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-ciudad" required value="${Surferos.plantillaTags["CIUDAD"]}, ${Surferos.plantillaTags["PAIS"]}" 
+                        id="form-persona-ciudad" required value="${Surferos.plantillaTags["CIUDAD"]}" 
                         name="email_persona"/></td>
                 <td><input type="text" class="form-persona-elemento editable" disabled
-                        id="form-persona-pais" required value="${Surferos.plantillaTags.NUM}, ${Surferos.plantillaTags.EVENTO}" 
+                        id="form-persona-pais" required value="${Surferos.plantillaTags["PAIS"]}" 
                         name="año_entrada_persona"/></td>
                 <td><input type="number" class="form-persona-elemento editable" disabled
                         id="form-persona-añosCompitiendo" required
@@ -386,6 +380,7 @@ Surferos.recuperaUnaPersona = async function (idSurfero, callBackFn) {
         console.error(error)
     }
 }
+
 
 /**
  * Función principal para mostrar los datos de una persona desde el MS y, posteriormente, imprimirla.

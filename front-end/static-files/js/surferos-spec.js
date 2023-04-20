@@ -346,3 +346,70 @@ describe('Surferos', function() {
 
 });
 */
+/*
+const myRequire = require('require');
+const assert = myRequire('assert');
+
+
+// Define las pruebas utilizando Mocha
+describe('Surferos', function() {
+  let plantilla;
+  let surfero;
+
+  beforeEach(function() {
+    // Configurar los datos de prueba antes de cada prueba
+    plantilla = `
+      <tr>
+        <td>{ID}</td>
+        <td>{NOMBRE}</td>
+        <td>{APELLIDOS}</td>
+        <td>{CIUDAD}</td>
+        <td>{PAIS}</td>
+        <td>{NUM}</td>
+        <td>{EVENTO}</td>
+        <td>{AÑOS COMPITIENDO}</td>
+        <td>{PUNTUACION}</td>
+        <td>{NUM VICTORIAS}</td>
+      </tr>
+    `;
+    surfero = {
+      ref: { '@ref': { id: '12345' } },
+      data: {
+        nombre: 'Juan',
+        apellidos: 'Pérez',
+        lugarNacimiento: {
+          ciudad: 'Barcelona',
+          pais: 'España'
+        },
+        numCampeonatosDisputados: {
+          cantidad: 5,
+          evento: 'Mundial'
+        },
+        añosCompitiendo: 10,
+        puntuacion: 8.5,
+        numVictorias: 3
+      }
+    };
+  });
+
+  it('sustituyeTags reemplaza correctamente los tags en la plantilla con los datos del surfero', function() {
+    const resultado = Surferos.sustituyeTags(plantilla, surfero);
+
+    // Utiliza las aserciones incorporadas en el navegador, por ejemplo, assert.strictEqual() o assert.ok()
+    // para realizar las pruebas
+    assert.ok(resultado.includes('12345'));
+    assert.ok(resultado.includes('Juan'));
+    assert.ok(resultado.includes('Pérez'));
+    assert.ok(resultado.includes('Barcelona'));
+    assert.ok(resultado.includes('España'));
+    assert.ok(resultado.includes('5'));
+    assert.ok(resultado.includes('Mundial'));
+    assert.ok(resultado.includes('10'));
+    assert.ok(resultado.includes('8.5'));
+    assert.ok(resultado.includes('3'));
+  });
+
+  // Agrega más pruebas aquí según sea necesario
+
+});
+*/

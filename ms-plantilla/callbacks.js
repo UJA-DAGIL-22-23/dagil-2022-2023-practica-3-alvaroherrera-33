@@ -122,7 +122,7 @@ const CB_MODEL_SELECTS = {
         // Cuando la llamada se hace con un objeto (como se hace desde el server-spec.js), el value No está vacío.
         let data = (Object.values(req.body)[0] === '') ? JSON.parse(Object.keys(req.body)[0]) : req.body
         //console.log("SETTODO data es", data)
-        let persona = await client.query(
+        let surfero = await client.query(
             q.Update(
                 q.Ref(q.Collection(COLLECTION), req.params.idSurfero),
                 {
@@ -131,9 +131,6 @@ const CB_MODEL_SELECTS = {
                         apellidos: data.apellidos,
                         ciudad: data.lugarNacimiento.ciudad,
                         pais: data.lugarNacimiento.pais,
-                        cantidad: data.numCampeonatosDisputados.cantidad,
-                        evento: data.numCampeonatosDisputados.evento,
-                        añosCompitiendo: data.añosCompitiendo,
                         puntuacion: data.puntuacion,
                         numVictorias: data.numVictorias,
                     },
