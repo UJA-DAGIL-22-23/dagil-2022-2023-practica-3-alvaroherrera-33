@@ -62,7 +62,7 @@ const CB_MODEL_SELECTS = {
     },
 
 
-    
+
     /**
      * Método para obtener todas las personas de la BBDD.
      * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
@@ -85,72 +85,70 @@ const CB_MODEL_SELECTS = {
         }
     },
 
-    
-        /**
-    * Método para obtener una persona de la BBDD a partir de su ID
-    * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
-    * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
-    */
-        getPorId: async (req, res) => {
-            try {
-                // console.log( "getPorId req", req.params.idPersona ) // req.params contiene todos los parámetros de la llamada
-                let surfero = await client.query(
-                    q.Get(q.Ref(q.Collection(COLLECTION), req.params.idSurfero))
-                )
-                // console.log( persona ) // Para comprobar qué se ha devuelto en persona
-                CORS(res)
-                    .status(200)
-                    .json(surfero)
-            } catch (error) {
-                CORS(res).status(500).json({ error: error.description })
-            }
-        },
 
-}
-
-  /**
-    * Método para ocambiar los datos de una persona
-    * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
-    * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
-    */
-  setTodo: async (req, res) => {
-    //console.log("setTodo req.body", req) // req.body contiene todos los parámetros de la llamada
-    try {
-        let valorDevuelto = {}
-        // Hay que comprobar Object.keys(req.body).length para saber si req.body es objeto "normal" o con problemas
-        // Cuando la llamada viene de un formulario, se crea una sola entrada, con toda la info en una sola key y el value está vacío.
-        // Cuando la llamada se hace con un objeto (como se hace desde el server-spec.js), el value No está vacío.
-        let data = (Object.values(req.body)[0] === '') ? JSON.parse(Object.keys(req.body)[0]) : req.body
-        //console.log("SETTODO data es", data)
-        let surfero = await client.query(
-            q.Update(
-                q.Ref(q.Collection(COLLECTION), req.params.idSurfero),
-                {
-                    data: {
-                        nombre: data.nombre,
-                        apellidos: data.apellidos,
-                        ciudad: data.lugarNacimiento.ciudad,
-                        pais: data.lugarNacimiento.pais,
-                        puntuacion: data.puntuacion,
-                        numVictorias: data.numVictorias,
-                    },
-                },
+    /**
+* Método para obtener una persona de la BBDD a partir de su ID
+* @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
+* @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
+*/
+    getPorId: async (req, res) => {
+        try {
+            // console.log( "getPorId req", req.params.idPersona ) // req.params contiene todos los parámetros de la llamada
+            let surfero = await client.query(
+                q.Get(q.Ref(q.Collection(COLLECTION), req.params.idSurfero))
             )
-        )
-            .then((ret) => {
-                valorDevuelto = ret
-                //console.log("Valor devuelto ", valorDevuelto)
-                CORS(res)
-                    .status(200)
-                    .header( 'Content-Type', 'application/json' )
-                    .json(valorDevuelto)
-            })
+            // console.log( persona ) // Para comprobar qué se ha devuelto en persona
+            CORS(res)
+                .status(200)
+                .json(surfero)
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
+        }
+    },
 
-    } catch (error) {
-        CORS(res).status(500).json({ error: error.description })
+    /**
+      * Método para ocambiar los datos de una persona
+      * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
+      * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
+      */
+    setTodo: async (req, res) => {
+        //console.log("setTodo req.body", req) // req.body contiene todos los parámetros de la llamada
+        try {
+            let valorDevuelto = {}
+            // Hay que comprobar Object.keys(req.body).length para saber si req.body es objeto "normal" o con problemas
+            // Cuando la llamada viene de un formulario, se crea una sola entrada, con toda la info en una sola key y el value está vacío.
+            // Cuando la llamada se hace con un objeto (como se hace desde el server-spec.js), el value No está vacío.
+            let data = (Object.values(req.body)[0] === '') ? JSON.parse(Object.keys(req.body)[0]) : req.body
+            //console.log("SETTODO data es", data)
+            let surfero = await client.query(
+                // Víctor: 24-abr-2023, Aquí estaba el error: la forma en que recuperabas los datos del objeto data era incorrecta :)
+                q.Update(
+                    q.Ref(q.Collection(COLLECTION), data.id),
+                    {
+                        data: {
+                            nombre: data.nombre,
+                            apellidos: data.apellidos,
+                            lugarNacimiento: { ciudad: data.ciudad, pais: data.pais },
+                            puntuacion: data.puntuacion,
+                            numVictorias: data.numVictorias,
+                        },
+                    },
+                )
+            )
+                .then((ret) => {
+                    valorDevuelto = ret
+                    //console.log("Valor devuelto ", valorDevuelto)
+                    CORS(res)
+                        .status(200)
+                        .header('Content-Type', 'application/json')
+                        .json(valorDevuelto)
+                })
+
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
+        }
     }
 }
-
 
 // CALLBACKS ADICIONALES
 
